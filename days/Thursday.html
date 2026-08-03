@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styleDays.css">
+    <title>Тренировка Вторник</title>
+</head>
+<body>
+    <button class="back-btn" onclick="window.location.href = '../index.html'">
+        Вернуться на главную
+    </button>
+
+    <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;justify-content:center;">
+        <button onclick="exportData()" style="background:transparent;border:2px solid #2ecc71;color:#2ecc71;padding:8px 16px;font-family:'Courier New',monospace;font-size:12px;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:1px;">⬇ Экспорт</button>
+        <button onclick="importData()" style="background:transparent;border:2px solid #3498db;color:#3498db;padding:8px 16px;font-family:'Courier New',monospace;font-size:12px;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:1px;">⬆ Импорт</button>
+        <button onclick="resetAllData()" style="background:transparent;border:2px solid #e74c3c;color:#e74c3c;padding:8px 16px;font-family:'Courier New',monospace;font-size:12px;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:1px;">✕ Сброс</button>
+    </div>
+
+    <div class="exercises-container">
+        
+        <div class="exercise-card">
+            <img class="exercise-image" src="./daysIMG/image1.jpg" alt="Сгибание рук с EZ-штангой">
+            
+            <div class="controls-row">
+                <button class="start-btn" onclick="startWorkout('Сгибание рук с EZ-штангой', 1)">
+                    Начать подход
+                </button>
+                <div class="control-group">
+                    <button class="control-btn" onclick="changeReps(1, -1)">-</button>
+                    <span class="control-value" id="repsDisplay1">10</span>
+                    <button class="control-btn" onclick="changeReps(1, 1)">+</button>
+                    <span class="control-unit">раз</span>
+                </div>
+                <div class="control-group">
+                    <button class="control-btn" onclick="changeWeight(1, -1)">-</button>
+                    <span class="control-value" id="weightDisplay1">20</span>
+                    <button class="control-btn" onclick="changeWeight(1, 1)">+</button>
+                    <span class="control-unit">кг</span>
+                </div>
+                <button class="pr-btn" onclick="setCustomPR(1)">Рекорд</button>
+            </div>
+            
+            <h1>Сгибание рук с EZ-штангой (или гантелями) сидя на скамье с наклоном вверх</h1>
+            
+            <div class="pr-display" id="pr1"></div>
+            
+            <p class="exercise-text">
+                1. Не разгибайте руки до конца в локтях
+                В нижней точке движения не выпрямляйте локти полностью (не блокируйте их). Оставляйте локти слегка согнутыми. Это снимет опасную нагрузку с локтевого сустава и сохранит напряжение в бицепсе.
+
+                2. Зафиксируйте плечи (локти неподвижны)
+                Ваши плечи и локти должны быть жестко прижаты к подушке скамьи и не двигаться. Не делайте рывков корпусом и не отрывайте плечи от скамьи. Работает только предплечье — локти служат неподвижным шарниром.
+
+                3. Вес должен быть умеренным
+                Не гонитесь за большим весом. Из-за наклона спинки бицепс находится в уязвимом растянутом положении. Слишком тяжелая штанга заставит вас делать рывки, что приведет к травме связок локтя.
+
+                4. Контролируйте опускание (не бросайте вес)
+                Опускайте штангу вниз медленно и подконтрольно, примерно за 2–3 секунды. Резкое «бросание» веса вниз на выпрямленные руки — это главная причина травм в этом упражнении.
+
+                5. Правильный хват и положение кисти
+                Держите гриф хватом сверху (ладони смотрят вверх). Кисти должны быть на одной линии с предплечьем. Не подворачивайте запястья внутрь (не сгибайте их сильно вниз) при подъеме — это перегружает лучезапястный сустав.
+            </p>
+
+            <div id="setsList1"></div>
+            <div id="totalInfo1"></div>
+            
+            <button class="reset-btn" onclick="resetExercise(1)">Сбросить упражнение</button>
+        </div>
+
+        <div class="exercise-card">
+            <img class="exercise-image" src="./daysIMG/Снимок экрана 2026-08-03 143908.png" alt="Скручивания на наклонной скамье">
+            
+            <div class="controls-row">
+                <button class="start-btn" onclick="startWorkout('Скручивания на наклонной скамье', 2)">
+                    Начать подход
+                </button>
+                <div class="control-group">
+                    <button class="control-btn" onclick="changeReps(2, -1)">-</button>
+                    <span class="control-value" id="repsDisplay2">15</span>
+                    <button class="control-btn" onclick="changeReps(2, 1)">+</button>
+                    <span class="control-unit">раз</span>
+                </div>
+                <button class="pr-btn" onclick="setCustomPR(2)">Рекорд</button>
+            </div>
+            
+            <h1>Скручивания на наклонной скамье</h1>
+            
+            <div class="pr-display" id="pr2"></div>
+            
+            <p class="exercise-text">
+                1. Исходное положение
+                Сядьте на край скамьи и закрепите ноги под валиками (колени должны быть согнуты под углом примерно 90 градусов).
+                Лягте спиной на скамью. Руки положите за голову (но не сцепляйте пальцы в замок на затылке, просто прикоснитесь ладонями к ушам или скрестите руки на груди — это снизит нагрузку на шею).
+
+                2. Движение вверх (скручивание)
+                Вдохните. На выдохе начните поднимать корпус, отрывая лопатки и плечи от скамьи.
+                Главное правило: вы делаете не просто подъем корпуса, а именно скручивание. Тяните грудную клетку к тазу. В верхней точке поясница должна оставаться прижатой к скамье, а скручивается только верхняя часть спины и плечи.
+                Плечи должны быть направлены вперед, а не сведены друг к другу (грудь расправлена).
+
+                3. Задержка
+                В верхней точке (когда лопатки оторваны от скамьи) задержитесь на 1 секунду и напрягите пресс.
+
+                4. Движение вниз (опускание)
+                На вдохе медленно, под контролем возвращайтесь в исходное положение.
+                Ни в коем случае не бросайте корпус вниз! Если вы просто упадете на скамью, вы потеряете напряжение в прессе, и вся нагрузка уйдет в поясницу. Опускайте спину медленно, не касаясь скамьи плечами до самого конца (держите мышцы в тонусе).
+            </p>
+
+            <div id="setsList2"></div>
+            <div id="totalInfo2"></div>
+            
+            <button class="reset-btn" onclick="resetExercise(2)">Сбросить упражнение</button>
+        </div>
+
+        <div class="exercise-card">
+            <img class="exercise-image" src="./daysIMG/your_image.jpg" alt="Обратные подтягивания">
+            
+            <div class="controls-row">
+                <button class="start-btn" onclick="startWorkout('Обратные подтягивания', 3)">
+                    Начать подход
+                </button>
+                <div class="control-group">
+                    <button class="control-btn" onclick="changeReps(3, -1)">-</button>
+                    <span class="control-value" id="repsDisplay3">8</span>
+                    <button class="control-btn" onclick="changeReps(3, 1)">+</button>
+                    <span class="control-unit">раз</span>
+                </div>
+                <button class="pr-btn" onclick="setCustomPR(3)">Рекорд</button>
+            </div>
+            
+            <h1>Обратные подтягивания</h1>
+            
+            <div class="pr-display" id="pr3"></div>
+            
+            <p class="exercise-text">
+                <strong>Техника выполнения обратных подтягиваний:</strong>
+
+                1. Исходное положение
+                Встаньте под перекладину. Возьмитесь за гриф обратным хватом (ладони смотрят на вас). Руки на ширине плеч или чуть уже. Повисните на прямых руках, ноги согните в коленях или скрестите их.
+
+                2. Движение вверх (подтягивание)
+                На выдохе начните подтягиваться, сводя лопатки вместе. Двигайтесь вверх до уровня, когда подбородок окажется над перекладиной. Локти должны быть прижаты к корпусу. В верхней точке задержитесь на 1 секунду.
+
+                3. Движение вниз (опускание)
+                На вдохе медленно, под контролем опускайтесь вниз до полного выпрямления рук. Не бросайте тело вниз — это травмоопасно. Опускание должно быть в 2 раза медленнее, чем подъём.
+
+                4. Важные моменты:
+                - Не раскачивайтесь корпусом — работают только руки и спина
+                - Дышите ритмично: вверх — выдох, вниз — вдох
+                - Если не получается подтянуться, используйте резиновый эспандер или делайте негативные подтягивания (только опускание)
+                - Для увеличения нагрузки можно использовать утяжелители
+
+                <strong>Преимущества обратного хвата:</strong>
+                - Больше нагружает бицепс и нижнюю часть широчайших мышц спины
+                - Позволяет поднять больший вес, чем прямой хват
+                - Мягче для плечевых суставов
+            </p>
+
+            <div id="setsList3"></div>
+            <div id="totalInfo3"></div>
+            
+            <button class="reset-btn" onclick="resetExercise(3)">Сбросить упражнение</button>
+        </div>
+    </div>
+
+    <script src="../script.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            updatePRDisplay(1);
+            updatePRDisplay(2);
+            updatePRDisplay(3);
+            
+            document.getElementById('weightDisplay1').textContent = EXERCISES[1].weight;
+            document.getElementById('repsDisplay1').textContent = EXERCISES[1].reps;
+            document.getElementById('repsDisplay2').textContent = EXERCISES[2].reps;
+            document.getElementById('repsDisplay3').textContent = EXERCISES[3].reps;
+        });
+    </script>
+</body>
+</html>

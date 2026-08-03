@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styleDays.css">
+    <title>Тренировка Пятница</title>
+</head>
+<body>
+    <button class="back-btn" onclick="window.location.href = '../index.html'">
+        Вернуться на главную
+    </button>
+
+    <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;justify-content:center;">
+        <button onclick="exportData()" style="background:transparent;border:2px solid #2ecc71;color:#2ecc71;padding:8px 16px;font-family:'Courier New',monospace;font-size:12px;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:1px;">⬇ Экспорт</button>
+        <button onclick="importData()" style="background:transparent;border:2px solid #3498db;color:#3498db;padding:8px 16px;font-family:'Courier New',monospace;font-size:12px;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:1px;">⬆ Импорт</button>
+        <button onclick="resetAllData()" style="background:transparent;border:2px solid #e74c3c;color:#e74c3c;padding:8px 16px;font-family:'Courier New',monospace;font-size:12px;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:1px;">✕ Сброс</button>
+    </div>
+
+    <div class="exercises-container">
+        
+        <div class="exercise-card">
+            <img class="exercise-image" src="./daysIMG/bench_press.jpg" alt="Жим лежа">
+            
+            <div class="controls-row">
+                <button class="start-btn" onclick="startWorkout('Жим лежа', 4)">
+                    Начать подход
+                </button>
+                <div class="control-group">
+                    <button class="control-btn" onclick="changeReps(4, -1)">-</button>
+                    <span class="control-value" id="repsDisplay4">10</span>
+                    <button class="control-btn" onclick="changeReps(4, 1)">+</button>
+                    <span class="control-unit">раз</span>
+                </div>
+                <div class="control-group">
+                    <button class="control-btn" onclick="changeWeight(4, -1)">-</button>
+                    <span class="control-value" id="weightDisplay4">60</span>
+                    <button class="control-btn" onclick="changeWeight(4, 1)">+</button>
+                    <span class="control-unit">кг</span>
+                </div>
+                <button class="pr-btn" onclick="setCustomPR(4)">Рекорд</button>
+            </div>
+            
+            <h1>Жим лежа</h1>
+            
+            <div class="pr-display" id="pr4"></div>
+            
+            <p class="exercise-text">
+                <strong>Техника выполнения жима лежа:</strong>
+
+                1. Исходное положение
+                Лягте на скамью так, чтобы гриф штанги был на уровне глаз. Ноги плотно уприте в пол, ягодицы прижаты к скамье. Лопатки сведены вместе и прижаты к скамье. Возьмитесь за гриф чуть шире плеч.
+
+                2. Снятие штанги
+                На вдохе снимите штангу со стоек, выпрямив руки. Зафиксируйте штангу над грудью. Локти должны быть слегка согнуты, не блокируйте их полностью.
+
+                3. Движение вниз (опускание)
+                На вдохе медленно опускайте штангу к нижней части груди. Локти двигаются под углом 45 градусов к корпусу. Гриф должен касаться груди (или почти касаться). Контролируйте движение, не бросайте вес.
+
+                4. Движение вверх (жим)
+                На выдохе мощным движением выжмите штангу вверх. Двигайте штангу немного назад, к стойкам. В верхней точке полностью не выпрямляйте локти, чтобы сохранить напряжение в грудных мышцах.
+
+                5. Важные моменты:
+                - Не отрывайте таз от скамьи
+                - Лопатки должны быть сведены на протяжении всего движения
+                - Дышите ритмично: вниз — вдох, вверх — выдох
+                - Используйте страхующего или стойки для безопасности
+                - При работе с большими весами используйте бинты на запястья
+
+                <strong>Работающие мышцы:</strong>
+                - Грудные мышцы (основные)
+                - Передние дельты
+                - Трицепсы
+                - Широчайшие мышцы спины (стабилизация)
+            </p>
+
+            <div id="setsList4"></div>
+            <div id="totalInfo4"></div>
+            
+            <button class="reset-btn" onclick="resetExercise(4)">Сбросить упражнение</button>
+        </div>
+
+        <div class="exercise-card">
+            <img class="exercise-image" src="./daysIMG/pullups.jpg" alt="Подтягивания прямым хватом">
+            
+            <div class="controls-row">
+                <button class="start-btn" onclick="startWorkout('Подтягивания прямым хватом', 5)">
+                    Начать подход
+                </button>
+                <div class="control-group">
+                    <button class="control-btn" onclick="changeReps(5, -1)">-</button>
+                    <span class="control-value" id="repsDisplay5">8</span>
+                    <button class="control-btn" onclick="changeReps(5, 1)">+</button>
+                    <span class="control-unit">раз</span>
+                </div>
+                <button class="pr-btn" onclick="setCustomPR(5)">Рекорд</button>
+            </div>
+            
+            <h1>Подтягивания прямым хватом</h1>
+            
+            <div class="pr-display" id="pr5"></div>
+            
+            <p class="exercise-text">
+                <strong>Техника выполнения подтягиваний прямым хватом:</strong>
+
+                1. Исходное положение
+                Возьмитесь за перекладину прямым хватом (ладони от себя). Руки на ширине плеч или чуть шире. Повисните на прямых руках, ноги согните в коленях и скрестите их.
+
+                2. Движение вверх (подтягивание)
+                На выдохе начните подтягиваться, сводя лопатки вместе. Двигайтесь вверх до уровня, когда подбородок окажется над перекладиной. Локти должны расходиться в стороны. В верхней точке задержитесь на 1 секунду.
+
+                3. Движение вниз (опускание)
+                На вдохе медленно, под контролем опускайтесь вниз до полного выпрямления рук. Не бросайте тело вниз. Опускание должно быть в 2 раза медленнее, чем подъём.
+
+                4. Важные моменты:
+                - Не раскачивайтесь корпусом
+                - Лопатки сводите вместе при подъёме
+                - Если не получается, используйте резиновый эспандер
+                - Для увеличения нагрузки используйте утяжелители
+
+                <strong>Работающие мышцы:</strong>
+                - Широчайшие мышцы спины (основные)
+                - Бицепсы
+                - Ромбовидные мышцы
+                - Трапециевидные мышцы (нижняя часть)
+            </p>
+
+            <div id="setsList5"></div>
+            <div id="totalInfo5"></div>
+            
+            <button class="reset-btn" onclick="resetExercise(5)">Сбросить упражнение</button>
+        </div>
+
+        <div class="exercise-card">
+            <img class="exercise-image" src="./daysIMG/lat_pulldown.jpg" alt="Тяга вертикального блока к груди">
+            
+            <div class="controls-row">
+                <button class="start-btn" onclick="startWorkout('Тяга вертикального блока к груди', 6)">
+                    Начать подход
+                </button>
+                <div class="control-group">
+                    <button class="control-btn" onclick="changeReps(6, -1)">-</button>
+                    <span class="control-value" id="repsDisplay6">12</span>
+                    <button class="control-btn" onclick="changeReps(6, 1)">+</button>
+                    <span class="control-unit">раз</span>
+                </div>
+                <button class="pr-btn" onclick="setCustomPR(6)">Рекорд</button>
+            </div>
+            
+            <h1>Тяга вертикального блока к груди</h1>
+            
+            <div class="pr-display" id="pr6"></div>
+            
+            <p class="exercise-text">
+                <strong>Техника выполнения тяги вертикального блока к груди:</strong>
+
+                1. Исходное положение
+                Сядьте на тренажер, зафиксируйте ноги под валиками. Возьмитесь за рукоятку широким прямым хватом (ладони от себя). Руки полностью выпрямлены. Спина прямая, грудная клетка раскрыта.
+
+                2. Движение вниз (тяга)
+                На выдохе начните тянуть рукоятку вниз к верхней части груди. Локти должны двигаться вдоль корпуса. В нижней точке лопатки сведены вместе, локти направлены вниз и назад. Задержитесь на 1 секунду.
+
+                3. Движение вверх (возврат)
+                На вдохе медленно, под контролем верните рукоятку в исходное положение. Руки должны полностью выпрямиться, но не блокируйте локти. Чувствуйте растяжение в широчайших мышцах спины.
+
+                4. Важные моменты:
+                - Не используйте инерцию — работайте мышцами
+                - Не наклоняйте корпус назад слишком сильно
+                - Движение должно быть плавным, без рывков
+                - Представляйте, что вы тянете локти, а не руки
+                - Не отрывайте таз от сиденья
+
+                <strong>Работающие мышцы:</strong>
+                - Широчайшие мышцы спины (основные)
+                - Большие круглые мышцы
+                - Ромбовидные мышцы
+                - Бицепсы (вспомогательные)
+                - Задние дельты
+            </p>
+
+            <div id="setsList6"></div>
+            <div id="totalInfo6"></div>
+            
+            <button class="reset-btn" onclick="resetExercise(6)">Сбросить упражнение</button>
+        </div>
+    </div>
+
+    <script src="../script.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            updatePRDisplay(4);
+            updatePRDisplay(5);
+            updatePRDisplay(6);
+            
+            document.getElementById('weightDisplay4').textContent = EXERCISES[4].weight;
+            document.getElementById('repsDisplay4').textContent = EXERCISES[4].reps;
+            document.getElementById('repsDisplay5').textContent = EXERCISES[5].reps;
+            document.getElementById('repsDisplay6').textContent = EXERCISES[6].reps;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Тренировки</title>
+</head>
+<body>
+    <div class="main-container">
+        <div class="header">
+            <h1>Тренировки</h1>
+            <p>Календарь</p>
+        </div>
+
+        <div class="calendar">
+            <div class="calendar-header">
+                <button class="cal-nav" onclick="changeMonth(-1)">[ < ]</button>
+                <span class="cal-month" id="monthDisplay">Август 2026</span>
+                <button class="cal-nav" onclick="changeMonth(1)">[ > ]</button>
+            </div>
+
+            <div class="calendar-grid">
+                <div class="cal-day-name">Пн</div>
+                <div class="cal-day-name">Вт</div>
+                <div class="cal-day-name">Ср</div>
+                <div class="cal-day-name">Чт</div>
+                <div class="cal-day-name">Пт</div>
+                <div class="cal-day-name">Сб</div>
+                <div class="cal-day-name">Вс</div>
+            </div>
+
+            <div class="calendar-grid" id="calendarDays"></div>
+        </div>
+
+        <div class="calendar-legend">
+            <span><span class="legend-dot" style="background:#e63946;"></span> Вторник</span>
+            <span><span class="legend-dot" style="background:#457b9d;"></span> Пятница</span>
+            <span><span class="legend-dot" style="background:#f1c40f;"></span> Воскресенье</span>
+        </div>
+
+        <div class="quick-actions">
+            <button class="date" onclick="window.location.href = './days/Thursday.html'">
+                <span class="day-name">Вторник</span>
+                <span class="day-short">Вт</span>
+            </button>
+            <button class="date" onclick="window.location.href = './days/Friday.html'">
+                <span class="day-name">Пятница</span>
+                <span class="day-short">Пт</span>
+            </button>
+            <button class="date" onclick="window.location.href = './days/Sunday.html'">
+                <span class="day-name">Воскресенье</span>
+                <span class="day-short">Вс</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const HISTORY_KEY = 'workoutHistory';
+        const PR_KEY = 'personalRecords';
+
+        function getHistory() {
+            const data = localStorage.getItem(HISTORY_KEY);
+            return data ? JSON.parse(data) : {};
+        }
+
+        function getWorkoutDates() {
+            const history = getHistory();
+            const dates = [];
+            
+            for (const exerciseId in history) {
+                const entries = history[exerciseId];
+                if (Array.isArray(entries)) {
+                    for (const entry of entries) {
+                        if (entry.date && !dates.includes(entry.date)) {
+                            dates.push(entry.date);
+                        }
+                    }
+                }
+            }
+            
+            return dates;
+        }
+
+        function getDayType(dateStr) {
+            const date = new Date(dateStr + 'T00:00:00+03:00');
+            const day = date.getDay();
+            const weekDays = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
+            const dayName = weekDays[day];
+            
+            if (dayName === 'Вт') return 'thursday';
+            if (dayName === 'Пт') return 'friday';
+            if (dayName === 'Вс') return 'sunday';
+            return null;
+        }
+
+        let currentMonth = new Date().getMonth();
+        let currentYear = new Date().getFullYear();
+
+        function renderCalendar() {
+            const monthNames = [
+                'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+                'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
+            ];
+            
+            document.getElementById('monthDisplay').textContent = 
+                monthNames[currentMonth] + ' ' + currentYear;
+
+            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+            const today = new Date().toISOString().split('T')[0];
+            
+            const workoutDates = getWorkoutDates();
+            
+            const grid = document.getElementById('calendarDays');
+            grid.innerHTML = '';
+            
+            const startOffset = (firstDay === 0) ? 6 : firstDay - 1;
+            
+            for (let i = 0; i < startOffset; i++) {
+                const empty = document.createElement('div');
+                empty.className = 'cal-day empty';
+                grid.appendChild(empty);
+            }
+            
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayDiv = document.createElement('div');
+                const monthStr = String(currentMonth + 1).padStart(2, '0');
+                const dayStr = String(day).padStart(2, '0');
+                const dateStr = currentYear + '-' + monthStr + '-' + dayStr;
+                
+                dayDiv.textContent = day;
+                dayDiv.className = 'cal-day';
+                
+                if (dateStr === today) {
+                    dayDiv.classList.add('today');
+                }
+                
+                if (workoutDates.includes(dateStr)) {
+                    const dayType = getDayType(dateStr);
+                    if (dayType === 'thursday') {
+                        dayDiv.classList.add('workout-thursday');
+                        dayDiv.title = 'Тренировка Вторник';
+                    } else if (dayType === 'friday') {
+                        dayDiv.classList.add('workout-friday');
+                        dayDiv.title = 'Тренировка Пятница';
+                    } else if (dayType === 'sunday') {
+                        dayDiv.classList.add('workout-sunday');
+                        dayDiv.title = 'Тренировка Воскресенье';
+                    }
+                    
+                    dayDiv.style.cursor = 'pointer';
+                    dayDiv.onclick = function() {
+                        if (dayType === 'thursday') {
+                            window.location.href = './days/Thursday.html';
+                        } else if (dayType === 'friday') {
+                            window.location.href = './days/Friday.html';
+                        } else if (dayType === 'sunday') {
+                            window.location.href = './days/Sunday.html';
+                        }
+                    };
+                }
+                
+                grid.appendChild(dayDiv);
+            }
+        }
+
+        function changeMonth(delta) {
+            currentMonth += delta;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            } else if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            renderCalendar();
+        }
+
+        renderCalendar();
+
+        window.addEventListener('storage', function(e) {
+            if (e.key === HISTORY_KEY || e.key === PR_KEY) {
+                renderCalendar();
+            }
+        });
+    </script>
+</body>
+</html>
